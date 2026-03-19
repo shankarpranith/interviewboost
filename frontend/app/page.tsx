@@ -112,7 +112,7 @@ export default function Home() {
         const formData = new FormData();
         formData.append("file", resumeFile);
         
-        const uploadRes = await fetch("http://127.0.0.1:8000/extract-resume", {
+        const uploadRes = await fetch("https://interviewboost-h4eq.onrender.com", {
           method: "POST",
           body: formData,
         });
@@ -123,7 +123,7 @@ export default function Home() {
       }
 
       setLoadingText("Generating initial question...");
-      const response = await fetch("http://127.0.0.1:8000/generate-question", {
+      const response = await fetch("https://interviewboost-h4eq.onrender.com", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
@@ -173,7 +173,7 @@ export default function Home() {
     try {
       if (round < MAX_ROUNDS) {
         setLoadingText(`Analyzing answer and generating round ${round + 1} question...`);
-        const response = await fetch("http://127.0.0.1:8000/generate-question", {
+        const response = await fetch("https://interviewboost-h4eq.onrender.com", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ 
@@ -198,7 +198,7 @@ export default function Home() {
 
       } else {
         setLoadingText("Interview complete. Generating final report...");
-        const response = await fetch("http://127.0.0.1:8000/generate-report", {
+        const response = await fetch("https://interviewboost-h4eq.onrender.com", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ 
