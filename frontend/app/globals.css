@@ -1,0 +1,5 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* That's it! We'll handle the dark background via our Tailwind classes in page.tsx */
