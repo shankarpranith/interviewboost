@@ -112,7 +112,7 @@ export default function Home() {
         const formData = new FormData();
         formData.append("file", resumeFile);
         
-       const uploadRes = await fetch("https://interviewboost-h4eq.onrender.com/extract-resume", {
+        const uploadRes = await fetch("https://interviewboost-h4eq.onrender.com/extract-resume", {
           method: "POST",
           body: formData,
         });
@@ -137,7 +137,7 @@ export default function Home() {
       if (!response.ok) {
         const errorData = await response.json();
         alert(errorData.detail || "Something went wrong on the server.");
-        setLoading(false); // Fix: Re-enable the UI
+        setLoading(false);
         setLoadingText("");
         return; 
       }
@@ -187,7 +187,7 @@ export default function Home() {
         if (!response.ok) {
           const errorData = await response.json();
           alert(errorData.detail || "Something went wrong on the server.");
-          setLoading(false); // Fix: Re-enable the UI
+          setLoading(false);
           setLoadingText("");
           return; 
         }
@@ -260,12 +260,12 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-dark-bg bg-gradient-futuristic text-text-primary p-8 font-sans selection:bg-accent-blue selection:text-white">
+    <div className="min-h-screen bg-dark-bg bg-gradient-futuristic text-text-primary p-4 md:p-8 font-sans selection:bg-accent-blue selection:text-white">
       <div className="max-w-4xl mx-auto space-y-8">
         
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-border-glass pb-6">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-border-glass pb-6 text-center md:text-left">
+          <div className="flex flex-col md:flex-row items-center gap-4">
             <div className="p-3 bg-glow-blue rounded-xl border border-accent-blue/30 shadow-glow-blue">
               <BrainCircuit className="w-8 h-8 text-accent-blue" />
             </div>
@@ -275,7 +275,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-4">
             <Show when="signed-out">
               <SignInButton mode="modal">
                 <button className="bg-accent-blue hover:bg-opacity-90 text-white font-semibold py-2 px-6 rounded-lg transition-all shadow-glow-blue">
@@ -287,7 +287,7 @@ export default function Home() {
             <Show when="signed-in">
               <button 
                 onClick={() => setView(view === "interview" ? "history" : "interview")}
-                className="flex items-center gap-2 bg-card-bg border border-border-glass hover:border-accent-blue/50 text-text-primary px-4 py-2 rounded-lg transition-colors"
+                className="flex items-center justify-center gap-2 bg-card-bg border border-border-glass hover:border-accent-blue/50 text-text-primary px-4 py-2 rounded-lg transition-colors w-full sm:w-auto"
               >
                 {view === "interview" ? (
                   <><History className="w-5 h-5 text-accent-blue" /> View History</>
@@ -296,7 +296,7 @@ export default function Home() {
                 )}
               </button>
               
-              <div className="ml-2 p-1 bg-card-bg border border-border-glass rounded-full flex items-center justify-center">
+              <div className="p-1 bg-card-bg border border-border-glass rounded-full flex items-center justify-center">
                  <UserButton />
               </div>
             </Show>
@@ -313,12 +313,12 @@ export default function Home() {
         {view === "history" ? (
           /* HISTORY DASHBOARD VIEW */
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <h2 className="text-2xl font-semibold">Past Sessions</h2>
             </div>
 
             {savedSessions.length === 0 ? (
-              <div className="bg-card-bg border border-border-glass rounded-2xl p-12 text-center backdrop-blur-glass shadow-glass">
+              <div className="bg-card-bg border border-border-glass rounded-2xl p-8 sm:p-12 text-center backdrop-blur-glass shadow-glass">
                 <History className="w-12 h-12 text-text-secondary mx-auto mb-4 opacity-50" />
                 <p className="text-text-secondary text-lg">No interviews completed yet.</p>
                 <p className="text-text-secondary/60 mt-2">Finish a 3-round session and your report will be saved here.</p>
@@ -326,9 +326,9 @@ export default function Home() {
             ) : (
               <div className="grid gap-4">
                 {savedSessions.map((session) => (
-                  <div key={session.id} className="bg-card-bg border border-border-glass rounded-2xl p-6 backdrop-blur-glass shadow-glass transition-all">
+                  <div key={session.id} className="bg-card-bg border border-border-glass rounded-2xl p-4 sm:p-6 backdrop-blur-glass shadow-glass transition-all">
                     <div 
-                      className="flex items-center justify-between cursor-pointer"
+                      className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 cursor-pointer"
                       onClick={() => setExpandedSessionId(expandedSessionId === session.id ? null : session.id)}
                     >
                       <div>
@@ -337,7 +337,7 @@ export default function Home() {
                           <Calendar className="w-4 h-4" /> {session.date}
                         </div>
                       </div>
-                      <button className="text-text-secondary hover:text-white transition-colors">
+                      <button className="text-text-secondary hover:text-white transition-colors w-full sm:w-auto text-left sm:text-right">
                         {expandedSessionId === session.id ? "Hide Details" : "Read Report"}
                       </button>
                     </div>
@@ -356,10 +356,10 @@ export default function Home() {
           /* INTERVIEW VIEW */
           <>
             {!sessionStarted ? (
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-card-bg border border-border-glass rounded-2xl p-8 backdrop-blur-glass shadow-glass space-y-6">
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-card-bg border border-border-glass rounded-2xl p-6 sm:p-8 backdrop-blur-glass shadow-glass space-y-6">
                 <h2 className="text-xl font-semibold">Configure Session</h2>
                 
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm text-text-secondary">Target Role</label>
                     <input 
@@ -388,7 +388,7 @@ export default function Home() {
                   <label className="text-sm text-text-secondary">Resume Context (Optional)</label>
                   <div 
                       onClick={() => fileInputRef.current?.click()}
-                      className="w-full border-2 border-dashed border-border-glass hover:border-accent-blue/50 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer transition-colors bg-dark-bg/50"
+                      className="w-full border-2 border-dashed border-border-glass hover:border-accent-blue/50 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer transition-colors bg-dark-bg/50 text-center"
                   >
                       <input 
                         type="file" 
@@ -400,7 +400,7 @@ export default function Home() {
                       {resumeFile ? (
                         <>
                           <FileText className="w-8 h-8 text-accent-blue mb-2" />
-                          <p className="text-accent-blue font-medium">{resumeFile.name}</p>
+                          <p className="text-accent-blue font-medium break-all">{resumeFile.name}</p>
                         </>
                       ) : (
                         <>
@@ -423,7 +423,7 @@ export default function Home() {
             ) : (
               <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="space-y-6">
                 
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <LiveMetric label="Progress" value={`Round ${round} of ${MAX_ROUNDS}`} icon={ShieldCheck} color="bg-green-500" />
                   <LiveMetric label="Target Role" value={role} icon={BrainCircuit} color="bg-accent-blue" />
                   <LiveMetric label="Stage" value={feedback ? "Final Review" : "Active Q&A"} icon={Target} color="bg-accent-purple" />
@@ -431,9 +431,9 @@ export default function Home() {
 
                 {!feedback ? (
                   <>
-                    <div className="bg-card-bg border border-border-glass rounded-2xl p-8 backdrop-blur-glass shadow-glass space-y-4">
+                    <div className="bg-card-bg border border-border-glass rounded-2xl p-6 sm:p-8 backdrop-blur-glass shadow-glass space-y-4">
                       <div className="flex gap-3 items-center text-accent-blue mb-2">
-                        <MessageSquareText className="w-5 h-5" />
+                        <MessageSquareText className="w-5 h-5 shrink-0" />
                         <h3 className="font-semibold text-lg">InterviewBoost (Question {round})</h3>
                       </div>
                       <p className="text-lg leading-relaxed whitespace-pre-wrap break-words">{currentQuestion}</p>
@@ -452,7 +452,7 @@ export default function Home() {
                         value={currentAnswer}
                         onChange={(e) => setCurrentAnswer(e.target.value)}
                         placeholder="Type your detailed answer here..."
-                        className="w-full h-40 bg-card-bg border border-border-glass rounded-2xl p-6 text-text-primary focus:outline-none focus:border-accent-purple transition-colors resize-none backdrop-blur-glass shadow-glass"
+                        className="w-full h-40 bg-card-bg border border-border-glass rounded-2xl p-4 sm:p-6 text-text-primary focus:outline-none focus:border-accent-purple transition-colors resize-none backdrop-blur-glass shadow-glass"
                       />
                       <button 
                         onClick={() => submitAnswer()} 
@@ -464,7 +464,7 @@ export default function Home() {
                     </div>
                   </>
                 ) : (
-                  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-card-bg border border-accent-purple/50 rounded-2xl p-8 backdrop-blur-glass shadow-glow-purple space-y-4">
+                  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-card-bg border border-accent-purple/50 rounded-2xl p-6 sm:p-8 backdrop-blur-glass shadow-glow-purple space-y-4">
                     <h3 className="text-xl font-bold text-accent-purple mb-4">Comprehensive Session Report</h3>
                     <div className="prose prose-invert max-w-none text-text-secondary leading-relaxed break-words overflow-x-auto w-full">
                       <ReactMarkdown>{feedback}</ReactMarkdown>
