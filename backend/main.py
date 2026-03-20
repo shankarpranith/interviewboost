@@ -17,6 +17,9 @@ client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 # Switching to 1.5-flash for better free-tier stability
 MODEL_ID = "gemini-2.5-flash"
 app = FastAPI()
+@app.get("/")
+def health_check():
+    return {"status": "Uvicorn is running successfully on Render!"}
 
 app.add_middleware(
     CORSMiddleware,
